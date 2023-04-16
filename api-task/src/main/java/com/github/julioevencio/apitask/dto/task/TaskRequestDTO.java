@@ -12,19 +12,19 @@ public class TaskRequestDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "Invalid title")
-	@Length(message = "Title cannot be longer than 100 characters")
+	@Length(max = 100, min = 1, message = "The title must be between 1 and 100 characters long")
 	private String title;
 
 	@NotBlank(message = "Invalid description")
-	@Length(message = "Description cannot be longer than 1000 characters")
+	@Length(max = 1000, min = 1, message = "The description must be between 1 and 1000 characters long")
 	private String description;
 
 	@NotNull(message = "Invalid completed")
 	private Boolean completed;
 
 	public TaskRequestDTO(
-			@NotBlank(message = "Invalid title") @Length(message = "Title cannot be longer than 100 characters") String title,
-			@NotBlank(message = "Invalid description") @Length(message = "Description cannot be longer than 1000 characters") String description,
+			@NotBlank(message = "Invalid title") @Length(max = 100, min = 1, message = "The title must be between 1 and 100 characters long") String title,
+			@NotBlank(message = "Invalid description") @Length(max = 1000, min = 1, message = "The description must be between 1 and 1000 characters long") String description,
 			@NotNull(message = "Invalid completed") Boolean completed) {
 		this.title = title;
 		this.description = description;
