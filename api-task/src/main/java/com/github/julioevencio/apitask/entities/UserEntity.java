@@ -36,7 +36,7 @@ public class UserEntity implements Serializable, UserDetails {
 	@Column(nullable = false, length = 100, unique = true)
 	private String email;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 60)
 	private String password;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -55,11 +55,8 @@ public class UserEntity implements Serializable, UserDetails {
 	private Boolean enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-		name = "tb_user_role",
-		joinColumns = {@JoinColumn(name = "id_user")},
-		inverseJoinColumns = {@JoinColumn(name = "id_role") }
-	)
+	@JoinTable(name = "tb_user_role", joinColumns = { @JoinColumn(name = "id_user") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_role") })
 	private List<RoleEntity> roles;
 
 	@Override
