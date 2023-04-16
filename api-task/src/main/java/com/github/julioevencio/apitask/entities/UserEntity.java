@@ -1,4 +1,4 @@
-package com.github.julioevencio.apitask.domain.entities;
+package com.github.julioevencio.apitask.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
