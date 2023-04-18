@@ -3,7 +3,6 @@ package com.github.julioevencio.apitask.services;
 import java.util.List;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +32,9 @@ public class AuthService {
 
 	public TokenDTO signin(AccountCredentialsDTO dto) {
 		try {
-			authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
-
+			//authenticationManager
+			//		.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
+			
 			UserEntity user = userRepository.findByUsername(dto.getUsername()).orElseThrow(() -> new ResourceNotFoundException("Error no AuthService"));
 			List<String> roles = user.getRoles().stream().map(role -> role.toString()).toList();
 			
@@ -43,8 +42,7 @@ public class AuthService {
 			
 			return token;
 		} catch (Exception e) {
-			// throw new ResourceNotFoundException("Invalid username/password supplied");
-			throw new ResourceNotFoundException(e.getMessage());
+			throw new ResourceNotFoundException("Invalid username/password supplied");
 		}
 	}
 	
