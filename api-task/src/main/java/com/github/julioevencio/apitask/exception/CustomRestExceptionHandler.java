@@ -21,7 +21,7 @@ public class CustomRestExceptionHandler {
 	}
 
 	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ApiMessageError> handlerRuntimeException(Exception e) {
+	public ResponseEntity<ApiMessageError> handlerRuntimeException(RuntimeException e) {
 		ApiMessageError errors = new ApiMessageError("Bad Request", Arrays.asList("Bad request..."));
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
@@ -35,6 +35,20 @@ public class CustomRestExceptionHandler {
 		ApiMessageError error = new ApiMessageError("Invalid data", errors);
 
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
+	}
+
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ApiMessageError> handlerResourceNotFoundException(ResourceNotFoundException e) {
+		ApiMessageError errors = new ApiMessageError("Resource not found", Arrays.asList(e.getMessage()));
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
+	}
+	
+	@ExceptionHandler(InvalidJwtAuthenticationException.class)
+	public ResponseEntity<ApiMessageError> handlerInvalidJwtAuthenticationException(InvalidJwtAuthenticationException e) {
+		ApiMessageError errors = new ApiMessageError("Invalid jwt", Arrays.asList(e.getMessage()));
+
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errors);
 	}
 
 }
