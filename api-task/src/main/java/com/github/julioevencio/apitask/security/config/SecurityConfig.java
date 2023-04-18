@@ -1,6 +1,5 @@
 package com.github.julioevencio.apitask.security.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +18,11 @@ import com.github.julioevencio.apitask.services.JwtTokenProviderService;
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
 	private JwtTokenProviderService jwtTokenProviderService;
+	
+	public SecurityConfig(JwtTokenProviderService jwtTokenProviderService) {
+		this.jwtTokenProviderService = jwtTokenProviderService;
+	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -41,7 +43,7 @@ public class SecurityConfig {
 						session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				)
 				.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-						.requestMatchers("/auth/signin", "/auth/refresh/**").permitAll()
+						.requestMatchers("/auth/signin", "/auth/create", "/auth/refresh/**").permitAll()
 						.requestMatchers("/api/**").authenticated()
 						.requestMatchers("/users").denyAll()
 				)

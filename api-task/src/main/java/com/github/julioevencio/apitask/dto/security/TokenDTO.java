@@ -12,16 +12,13 @@ public class TokenDTO implements Serializable {
 	private Date created;
 	private Date expiration;
 	private String accessToken;
-	private String refreshToken;
 
-	public TokenDTO(String username, Boolean authenticated, Date created, Date expiration, String accessToken,
-			String refreshToken) {
+	public TokenDTO(String username, Boolean authenticated, Date created, Date expiration, String accessToken) {
 		this.username = username;
 		this.authenticated = authenticated;
 		this.created = created;
 		this.expiration = expiration;
 		this.accessToken = accessToken;
-		this.refreshToken = refreshToken;
 	}
 
 	public String getUsername() {
@@ -42,10 +39,6 @@ public class TokenDTO implements Serializable {
 
 	public String getAccessToken() {
 		return accessToken;
-	}
-
-	public String getRefreshToken() {
-		return refreshToken;
 	}
 
 }

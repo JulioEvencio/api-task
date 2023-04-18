@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.julioevencio.apitask.dto.security.AccountCredentialsDTO;
 import com.github.julioevencio.apitask.dto.security.TokenDTO;
+import com.github.julioevencio.apitask.dto.user.UserRequestDTO;
+import com.github.julioevencio.apitask.dto.user.UserResponseDTO;
 import com.github.julioevencio.apitask.services.AuthService;
 
 import jakarta.validation.Valid;
@@ -21,6 +23,11 @@ public class AuthController {
 
 	public AuthController(AuthService authService) {
 		this.authService = authService;
+	}
+	
+	@PostMapping(value = "/create")
+	public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(authService.createUser(dto));
 	}
 
 	@PostMapping("/signin")

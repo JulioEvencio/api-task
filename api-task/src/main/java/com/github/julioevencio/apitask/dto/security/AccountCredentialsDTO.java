@@ -2,27 +2,30 @@ package com.github.julioevencio.apitask.dto.security;
 
 import java.io.Serializable;
 
-import jakarta.validation.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.validation.constraints.NotBlank;
 
 public class AccountCredentialsDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Email(message = "Invalid e-mail")
-	private String email;
+	@NotBlank(message = "Invalid username")
+	@Length(max = 100, min = 1, message = "The e-mail must be between 1 and 20 characters long")
+	private String username;
 
 	@NotBlank(message = "Invalid password")
 	private String password;
 
-	public AccountCredentialsDTO(@Email(message = "Invalid e-mail") String email,
+	public AccountCredentialsDTO(
+			@NotBlank(message = "Invalid username") @Length(max = 100, min = 1, message = "The e-mail must be between 1 and 100 characters long") String username,
 			@NotBlank(message = "Invalid password") String password) {
-		this.email = email;
+		this.username = username;
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getPassword() {

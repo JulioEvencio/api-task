@@ -47,9 +47,8 @@ public class JwtTokenProviderService {
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);
 		String accessToken = this.getAccessToken(username, roles, now, validity);
-		String refreshToken = this.getRefreshToken(username, roles, now);
 
-		return new TokenDTO(username, true, now, validity, accessToken, refreshToken);
+		return new TokenDTO(username, true, now, validity, accessToken);
 	}
 
 	private String getAccessToken(String username, List<String> roles, Date now, Date validity) {
@@ -61,18 +60,6 @@ public class JwtTokenProviderService {
 				.withExpiresAt(validity)
 				.withSubject(username)
 				.withIssuer(issueURL)
-				.sign(algorithm)
-				.strip();
-	}
-
-	private String getRefreshToken(String username, List<String> roles, Date now) {
-		Date validity = new Date(now.getTime() + validityInMilliseconds * 3);
-		
-		return JWT.create()
-				.withClaim("roles", roles)
-				.withIssuedAt(now)
-				.withExpiresAt(validity)
-				.withSubject(username)
 				.sign(algorithm)
 				.strip();
 	}

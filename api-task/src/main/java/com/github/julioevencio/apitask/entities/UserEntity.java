@@ -30,13 +30,13 @@ public class UserEntity implements Serializable, UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, length = 20, unique = true)
+	@Column(nullable = false, unique = true)
 	private String username;
 
-	@Column(nullable = false, length = 100, unique = true)
+	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(nullable = false, length = 60)
+	@Column(nullable = false)
 	private String password;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
