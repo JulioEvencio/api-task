@@ -1,5 +1,6 @@
 package com.github.julioevencio.apitask.configs;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.github.julioevencio.apitask.services.TokenJwtService;
 import com.github.julioevencio.apitask.services.UserDetailsServiceImpl;
@@ -21,12 +24,29 @@ public class SecurityConfig {
 
 	private final TokenJwtService tokenJwtService;
 	private final UserDetailsServiceImpl userDetailsServiceImpl;
+	
+	@Value("${cors.originPatterns}")
+	private String corsOriginPatterns;
 
 	public SecurityConfig(TokenJwtService tokenJwtService, UserDetailsServiceImpl userDetailsServiceImpl) {
 		this.tokenJwtService = tokenJwtService;
 		this.userDetailsServiceImpl = userDetailsServiceImpl;
 	}
-	
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry
+				.addMapping("/**")
+				.allowedMethods("*")
+				.allowedOrigins(corsOriginPatterns)
+				.allowCredentials(true);
+			}
+		};
+	}
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -50,6 +70,8 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.GET, "/auth/me").authenticated()
 					.requestMatchers("/api/**").authenticated()
 					.anyRequest().denyAll()
+				.and()
+				.cors()
 				.and()
 				.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
 				.build();
