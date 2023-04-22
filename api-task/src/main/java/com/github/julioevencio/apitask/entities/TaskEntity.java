@@ -34,7 +34,6 @@ public class TaskEntity implements Serializable {
 	private UserEntity user;
 
 	public TaskEntity() {
-		// Code
 	}
 
 	public TaskEntity(Long id, String title, String description, Boolean completed, UserEntity user) {

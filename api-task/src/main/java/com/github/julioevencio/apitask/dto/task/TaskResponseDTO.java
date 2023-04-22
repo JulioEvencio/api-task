@@ -6,10 +6,10 @@ public class TaskResponseDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private String title;
-	private String description;
-	private Boolean completed;
+	private final Long id;
+	private final String title;
+	private final String description;
+	private final Boolean completed;
 
 	public TaskResponseDTO(Long id, String title, String description, Boolean completed) {
 		this.id = id;

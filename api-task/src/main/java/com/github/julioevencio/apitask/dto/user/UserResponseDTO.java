@@ -6,9 +6,9 @@ public class UserResponseDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private String username;
-	private String email;
+	private final Long id;
+	private final String username;
+	private final String email;
 
 	public UserResponseDTO(Long id, String username, String email) {
 		this.id = id;

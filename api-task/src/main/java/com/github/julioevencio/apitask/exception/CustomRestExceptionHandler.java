@@ -37,18 +37,18 @@ public class CustomRestExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
 	}
 
+	@ExceptionHandler(LoginException.class)
+	public ResponseEntity<ApiMessageError> handlerLoginException(LoginException e) {
+		ApiMessageError errors = new ApiMessageError("Login error", Arrays.asList(e.getMessage()));
+
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
+	}
+
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ApiMessageError> handlerResourceNotFoundException(ResourceNotFoundException e) {
 		ApiMessageError errors = new ApiMessageError("Resource not found", Arrays.asList(e.getMessage()));
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
-	}
-	
-	@ExceptionHandler(InvalidJwtAuthenticationException.class)
-	public ResponseEntity<ApiMessageError> handlerInvalidJwtAuthenticationException(InvalidJwtAuthenticationException e) {
-		ApiMessageError errors = new ApiMessageError("Invalid jwt", Arrays.asList(e.getMessage()));
-
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errors);
 	}
 
 }

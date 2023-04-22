@@ -1,23 +1,16 @@
 package com.github.julioevencio.apitask.services;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import com.github.julioevencio.apitask.dto.security.LoginRequestDTO;
+import com.github.julioevencio.apitask.dto.security.TokenResponseDTO;
+import com.github.julioevencio.apitask.dto.user.UserRequestDTO;
+import com.github.julioevencio.apitask.dto.user.UserResponseDTO;
 
-import com.github.julioevencio.apitask.exception.ResourceNotFoundException;
-import com.github.julioevencio.apitask.repositories.UserRepository;
+public interface UserService {
 
-@Service
-public class UserService implements UserDetailsService {
+	public UserResponseDTO register(UserRequestDTO dto);
 
-	private UserRepository userRepository;
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository
-				.findByUsername(username)
-				.orElseThrow(() -> new ResourceNotFoundException("Username or password not found"));
-	}
+	public TokenResponseDTO login(LoginRequestDTO dto);
+	
+	public UserResponseDTO me();
 
 }

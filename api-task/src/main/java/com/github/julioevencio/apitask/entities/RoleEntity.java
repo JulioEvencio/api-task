@@ -1,6 +1,5 @@
 package com.github.julioevencio.apitask.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_role")
-public class RoleEntity implements Serializable, GrantedAuthority {
+public class RoleEntity implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +21,7 @@ public class RoleEntity implements Serializable, GrantedAuthority {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, length = 5)
+	@Column(nullable = false, unique = true, length = 5)
 	private String name;
 
 	@Override
@@ -31,7 +30,6 @@ public class RoleEntity implements Serializable, GrantedAuthority {
 	}
 
 	public RoleEntity() {
-		// Code
 	}
 
 	public RoleEntity(Long id, String name) {

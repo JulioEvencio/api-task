@@ -3,17 +3,17 @@ package com.github.julioevencio.apitask.dto.security;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TokenDTO implements Serializable {
+public class TokenResponseDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String username;
-	private Boolean authenticated;
-	private Date created;
-	private Date expiration;
-	private String accessToken;
+	private final String username;
+	private final Boolean authenticated;
+	private final Date created;
+	private final Date expiration;
+	private final String accessToken;
 
-	public TokenDTO(String username, Boolean authenticated, Date created, Date expiration, String accessToken) {
+	public TokenResponseDTO(String username, Boolean authenticated, Date created, Date expiration, String accessToken) {
 		this.username = username;
 		this.authenticated = authenticated;
 		this.created = created;

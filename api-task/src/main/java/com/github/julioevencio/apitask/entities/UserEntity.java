@@ -1,6 +1,5 @@
 package com.github.julioevencio.apitask.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +21,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_user")
-public class UserEntity implements Serializable, UserDetails {
+public class UserEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,8 +54,11 @@ public class UserEntity implements Serializable, UserDetails {
 	private Boolean enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role", joinColumns = { @JoinColumn(name = "id_user") }, inverseJoinColumns = {
-			@JoinColumn(name = "id_role") })
+	@JoinTable(
+			name = "tb_user_role",
+			joinColumns = { @JoinColumn(name = "user_id") },
+			inverseJoinColumns = { @JoinColumn(name = "role_id") }
+	)
 	private List<RoleEntity> roles;
 
 	@Override
@@ -95,7 +97,6 @@ public class UserEntity implements Serializable, UserDetails {
 	}
 
 	public UserEntity() {
-		// Code
 	}
 
 	public UserEntity(Long id, String username, String email, String password, List<TaskEntity> tasks,
