@@ -1,9 +1,10 @@
 package com.github.julioevencio.apitask.dto.task;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-public class TaskResponseDTO implements Serializable {
+import com.github.julioevencio.apitask.dto.ResponseDTO;
+
+public class TaskResponseDTO extends ResponseDTO {
 
 	private static final long serialVersionUID = 1L;
 

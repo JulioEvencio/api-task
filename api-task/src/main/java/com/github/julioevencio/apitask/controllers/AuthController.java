@@ -13,6 +13,7 @@ import com.github.julioevencio.apitask.dto.security.LoginRequestDTO;
 import com.github.julioevencio.apitask.dto.security.TokenResponseDTO;
 import com.github.julioevencio.apitask.dto.user.UserRequestDTO;
 import com.github.julioevencio.apitask.dto.user.UserResponseDTO;
+import com.github.julioevencio.apitask.dto.utils.LinkUtilDTO;
 import com.github.julioevencio.apitask.services.UserService;
 import com.github.julioevencio.apitask.services.UserServiceImpl;
 
@@ -30,17 +31,35 @@ public class AuthController {
 
 	@PostMapping(path = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRequestDTO dto) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(dto));
+		UserResponseDTO response = userService.register(dto);
+
+		response.addLink(new LinkUtilDTO("self", "/auth/register"));
+		response.addLink(new LinkUtilDTO("login", "/auth/login"));
+		response.addLink(new LinkUtilDTO("me", "/auth/me"));
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 	@PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TokenResponseDTO> login(@RequestBody @Valid LoginRequestDTO dto) {
-		return ResponseEntity.status(HttpStatus.OK).body(userService.login(dto));
+		TokenResponseDTO response = userService.login(dto);
+
+		response.addLink(new LinkUtilDTO("self", "/auth/login"));
+		response.addLink(new LinkUtilDTO("register", "/auth/register"));
+		response.addLink(new LinkUtilDTO("me", "/auth/me"));
+
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 	@GetMapping(path = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserResponseDTO> login() {
-		return ResponseEntity.status(HttpStatus.OK).body(userService.me());
+		UserResponseDTO response = userService.me();
+
+		response.addLink(new LinkUtilDTO("self", "/auth/me"));
+		response.addLink(new LinkUtilDTO("register", "/auth/register"));
+		response.addLink(new LinkUtilDTO("login", "/auth/login"));
+
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 }

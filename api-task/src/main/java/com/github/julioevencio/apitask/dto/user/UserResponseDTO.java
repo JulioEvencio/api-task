@@ -1,9 +1,10 @@
 package com.github.julioevencio.apitask.dto.user;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-public class UserResponseDTO implements Serializable {
+import com.github.julioevencio.apitask.dto.ResponseDTO;
+
+public class UserResponseDTO extends ResponseDTO {
 
 	private static final long serialVersionUID = 1L;
 

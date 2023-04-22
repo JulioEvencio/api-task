@@ -1,9 +1,10 @@
 package com.github.julioevencio.apitask.dto.security;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class TokenResponseDTO implements Serializable {
+import com.github.julioevencio.apitask.dto.ResponseDTO;
+
+public class TokenResponseDTO extends ResponseDTO {
 
 	private static final long serialVersionUID = 1L;
 
