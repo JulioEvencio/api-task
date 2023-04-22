@@ -36,7 +36,7 @@ public class SecurityConfig {
 	public OncePerRequestFilter jwtFilter() {
 		return new JwtAuthFilter(tokenJwtService, userDetailsServiceImpl);
 	}
-	
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity
@@ -45,10 +45,11 @@ public class SecurityConfig {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeHttpRequests()
-				.requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
-				.requestMatchers(HttpMethod.GET, "/auth/me").authenticated()
-				.requestMatchers("/api/**").authenticated()
-				.anyRequest().denyAll()
+					.requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
+					.requestMatchers("/v3/api-docs", "/swagger-ui/index.html").permitAll()
+					.requestMatchers(HttpMethod.GET, "/auth/me").authenticated()
+					.requestMatchers("/api/**").authenticated()
+					.anyRequest().denyAll()
 				.and()
 				.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
 				.build();
