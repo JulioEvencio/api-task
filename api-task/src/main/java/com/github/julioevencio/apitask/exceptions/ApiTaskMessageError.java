@@ -1,34 +1,33 @@
-package com.github.julioevencio.apitask.exception;
+package com.github.julioevencio.apitask.exceptions;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ApiTaskMessageError implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String message;
-	private List<String> errors;
+	private final String message;
+	private final List<String> errors;
+	private final LocalDateTime timestamp;
 
 	public ApiTaskMessageError(String message, List<String> errors) {
 		this.message = message;
 		this.errors = errors;
+		this.timestamp = LocalDateTime.now();
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	public List<String> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(List<String> errors) {
-		this.errors = errors;
+	public LocalDateTime getTimestamp() {
+		return timestamp;
 	}
 
 }

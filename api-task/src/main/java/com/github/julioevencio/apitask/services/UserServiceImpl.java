@@ -12,9 +12,9 @@ import com.github.julioevencio.apitask.dto.user.UserMapperDTO;
 import com.github.julioevencio.apitask.dto.user.UserRequestDTO;
 import com.github.julioevencio.apitask.dto.user.UserResponseDTO;
 import com.github.julioevencio.apitask.entities.UserEntity;
-import com.github.julioevencio.apitask.exception.ApiTaskLoginException;
-import com.github.julioevencio.apitask.exception.ApiTaskResourceNotFoundException;
-import com.github.julioevencio.apitask.exception.ApiTaskSQLException;
+import com.github.julioevencio.apitask.exceptions.ApiTaskLoginException;
+import com.github.julioevencio.apitask.exceptions.ApiTaskResourceNotFoundException;
+import com.github.julioevencio.apitask.exceptions.ApiTaskSQLException;
 import com.github.julioevencio.apitask.repositories.UserRepository;
 
 @Service

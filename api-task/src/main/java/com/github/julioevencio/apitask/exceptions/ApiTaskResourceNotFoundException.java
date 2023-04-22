@@ -1,4 +1,4 @@
-package com.github.julioevencio.apitask.exception;
+package com.github.julioevencio.apitask.exceptions;
 
 public class ApiTaskResourceNotFoundException extends RuntimeException {
 
