@@ -22,7 +22,7 @@ public class RoleEntity implements GrantedAuthority {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@Column(nullable = false, unique = true, length = 5)
+	@Column(nullable = false, unique = true, length = 10)
 	private String name;
 
 	@Override

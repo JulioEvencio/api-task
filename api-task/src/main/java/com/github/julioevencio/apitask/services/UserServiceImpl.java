@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
 		List<RoleEntity> roles = new ArrayList<>();
-		roles.add(roleRepository.findByName("user").orElseThrow(() -> new RuntimeException()));
+		roles.add(roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException()));
 
 		user.setRoles(roles);
 
