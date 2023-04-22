@@ -12,8 +12,9 @@ import com.github.julioevencio.apitask.dto.user.UserMapperDTO;
 import com.github.julioevencio.apitask.dto.user.UserRequestDTO;
 import com.github.julioevencio.apitask.dto.user.UserResponseDTO;
 import com.github.julioevencio.apitask.entities.UserEntity;
-import com.github.julioevencio.apitask.exception.LoginException;
-import com.github.julioevencio.apitask.exception.ResourceNotFoundException;
+import com.github.julioevencio.apitask.exception.ApiTaskLoginException;
+import com.github.julioevencio.apitask.exception.ApiTaskResourceNotFoundException;
+import com.github.julioevencio.apitask.exception.ApiTaskSQLException;
 import com.github.julioevencio.apitask.repositories.UserRepository;
 
 @Service
@@ -32,24 +33,28 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserResponseDTO register(UserRequestDTO dto) {
-		UserEntity user = UserMapperDTO.fromDTO(dto);
+		try {
+			UserEntity user = UserMapperDTO.fromDTO(dto);
 
-		user.setEnabled(true);
-		user.setCredentialsNonExpired(true);
-		user.setAccountNonLocked(true);
-		user.setAccountNonExpired(true);
-		user.setPassword(passwordEncoder.encode(dto.getPassword()));
+			user.setEnabled(true);
+			user.setCredentialsNonExpired(true);
+			user.setAccountNonLocked(true);
+			user.setAccountNonExpired(true);
+			user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
-		return UserMapperDTO.fromEntity(userRepository.save(user));
+			return UserMapperDTO.fromEntity(userRepository.save(user));
+		} catch (Exception e) {
+			throw new ApiTaskSQLException("Username or e-mail already exists");
+		}
 	}
 
 	@Override
 	public TokenResponseDTO login(LoginRequestDTO dto) {
 		UserEntity user = userRepository.findByUsername(dto.getUsername())
-				.orElseThrow(() -> new LoginException("Username not found"));
+				.orElseThrow(() -> new ApiTaskLoginException("Username not found"));
 
 		if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-			throw new LoginException("Invalid password");
+			throw new ApiTaskLoginException("Invalid password");
 		}
 
 		List<String> roles = user.getRoles().stream().map(role -> role.toString()).toList();
@@ -62,7 +67,7 @@ public class UserServiceImpl implements UserService {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		UserEntity user = userRepository.findByUsername(username)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found"));
+				.orElseThrow(() -> new ApiTaskResourceNotFoundException("User not found"));
 
 		return UserMapperDTO.fromEntity(user);
 	}

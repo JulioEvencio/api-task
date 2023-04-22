@@ -14,41 +14,48 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomRestExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ApiMessageError> handlerException(Exception e) {
-		ApiMessageError errors = new ApiMessageError("Bad Request", Arrays.asList("Bad request..."));
+	public ResponseEntity<ApiTaskMessageError> handlerException(Exception e) {
+		ApiTaskMessageError errors = new ApiTaskMessageError("Bad Request", Arrays.asList("Bad request..."));
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 
 	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ApiMessageError> handlerRuntimeException(RuntimeException e) {
-		ApiMessageError errors = new ApiMessageError("Bad Request", Arrays.asList("Bad request..."));
+	public ResponseEntity<ApiTaskMessageError> handlerRuntimeException(RuntimeException e) {
+		ApiTaskMessageError errors = new ApiTaskMessageError("Bad Request", Arrays.asList("Bad request..."));
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ApiMessageError> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+	public ResponseEntity<ApiTaskMessageError> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		List<String> errors = e.getBindingResult().getAllErrors().stream().map(error -> error.getDefaultMessage())
 				.collect(Collectors.toList());
 
-		ApiMessageError error = new ApiMessageError("Invalid data", errors);
+		ApiTaskMessageError error = new ApiTaskMessageError("Invalid data", errors);
 
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
 	}
 
-	@ExceptionHandler(LoginException.class)
-	public ResponseEntity<ApiMessageError> handlerLoginException(LoginException e) {
-		ApiMessageError errors = new ApiMessageError("Login error", Arrays.asList(e.getMessage()));
+	@ExceptionHandler(ApiTaskLoginException.class)
+	public ResponseEntity<ApiTaskMessageError> handlerApiTaskLoginException(ApiTaskLoginException e) {
+		ApiTaskMessageError errors = new ApiTaskMessageError("Login error", Arrays.asList(e.getMessage()));
 
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
 	}
 
-	@ExceptionHandler(ResourceNotFoundException.class)
-	public ResponseEntity<ApiMessageError> handlerResourceNotFoundException(ResourceNotFoundException e) {
-		ApiMessageError errors = new ApiMessageError("Resource not found", Arrays.asList(e.getMessage()));
+	@ExceptionHandler(ApiTaskResourceNotFoundException.class)
+	public ResponseEntity<ApiTaskMessageError> handlerApiTaskResourceNotFoundException(ApiTaskResourceNotFoundException e) {
+		ApiTaskMessageError errors = new ApiTaskMessageError("Resource not found", Arrays.asList(e.getMessage()));
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
+	}
+
+	@ExceptionHandler(ApiTaskSQLException.class)
+	public ResponseEntity<ApiTaskMessageError> handlerApiTaskSQLException(ApiTaskSQLException e) {
+		ApiTaskMessageError errors = new ApiTaskMessageError("Invalid data", Arrays.asList(e.getMessage()));
+
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errors);
 	}
 
 }

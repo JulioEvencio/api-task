@@ -1,10 +1,10 @@
 package com.github.julioevencio.apitask.exception;
 
-public class ResourceNotFoundException extends RuntimeException {
+public class ApiTaskLoginException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ResourceNotFoundException(String message) {
+	public ApiTaskLoginException(String message) {
 		super(message);
 	}
 
