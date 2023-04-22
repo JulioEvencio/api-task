@@ -30,13 +30,13 @@ public class UserEntity implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 20)
 	private String username;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 100)
 	private String email;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 60)
 	private String password;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -55,8 +55,11 @@ public class UserEntity implements UserDetails {
 	private Boolean enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "role_id") })
+	@JoinTable(
+			name = "tb_user_role",
+			joinColumns = { @JoinColumn(name = "user_id") },
+			inverseJoinColumns = { @JoinColumn(name = "role_id") }
+	)
 	private List<RoleEntity> roles;
 
 	@Override
