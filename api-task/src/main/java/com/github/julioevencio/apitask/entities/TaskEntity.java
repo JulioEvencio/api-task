@@ -2,6 +2,7 @@ package com.github.julioevencio.apitask.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,8 +19,8 @@ public class TaskEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 
 	@Column(nullable = false, length = 100)
 	private String title;
@@ -36,7 +37,7 @@ public class TaskEntity implements Serializable {
 	public TaskEntity() {
 	}
 
-	public TaskEntity(Long id, String title, String description, Boolean completed, UserEntity user) {
+	public TaskEntity(UUID id, String title, String description, Boolean completed, UserEntity user) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -44,11 +45,11 @@ public class TaskEntity implements Serializable {
 		this.user = user;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

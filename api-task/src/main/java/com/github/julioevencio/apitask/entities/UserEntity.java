@@ -3,6 +3,7 @@ package com.github.julioevencio.apitask.entities;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,8 +27,8 @@ public class UserEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 
 	@Column(nullable = false, unique = true)
 	private String username;
@@ -54,11 +55,8 @@ public class UserEntity implements UserDetails {
 	private Boolean enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "tb_user_role",
-			joinColumns = { @JoinColumn(name = "user_id") },
-			inverseJoinColumns = { @JoinColumn(name = "role_id") }
-	)
+	@JoinTable(name = "tb_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
 	private List<RoleEntity> roles;
 
 	@Override
@@ -99,7 +97,7 @@ public class UserEntity implements UserDetails {
 	public UserEntity() {
 	}
 
-	public UserEntity(Long id, String username, String email, String password, List<TaskEntity> tasks,
+	public UserEntity(UUID id, String username, String email, String password, List<TaskEntity> tasks,
 			Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled,
 			List<RoleEntity> roles) {
 		this.id = id;
@@ -114,11 +112,11 @@ public class UserEntity implements UserDetails {
 		this.roles = roles;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

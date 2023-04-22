@@ -1,24 +1,25 @@
 package com.github.julioevencio.apitask.dto.task;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class TaskResponseDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Long id;
+	private final UUID id;
 	private final String title;
 	private final String description;
 	private final Boolean completed;
 
-	public TaskResponseDTO(Long id, String title, String description, Boolean completed) {
+	public TaskResponseDTO(UUID id, String title, String description, Boolean completed) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.completed = completed;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 

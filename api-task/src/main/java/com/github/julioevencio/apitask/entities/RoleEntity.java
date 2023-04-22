@@ -1,6 +1,7 @@
 package com.github.julioevencio.apitask.entities;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -18,8 +19,8 @@ public class RoleEntity implements GrantedAuthority {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 
 	@Column(nullable = false, unique = true, length = 5)
 	private String name;
@@ -32,16 +33,16 @@ public class RoleEntity implements GrantedAuthority {
 	public RoleEntity() {
 	}
 
-	public RoleEntity(Long id, String name) {
+	public RoleEntity(UUID id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
