@@ -15,7 +15,7 @@ public class OpenApiConfig {
 		Info info = new Info()
 				.title("API Task")
 				.version("1.0")
-				.description("This project is a REST API of a task manager")
+				.description("This project is a RESTful API of a task manager")
 				.termsOfService("https://github.com/JulioEvencio/api-task/blob/main/LICENSE")
 				.license(new License().name("MIT License")
 						.url("https://github.com/JulioEvencio/api-task/blob/main/LICENSE"));
