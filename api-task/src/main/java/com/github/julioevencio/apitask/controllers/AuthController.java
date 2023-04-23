@@ -70,8 +70,8 @@ public class AuthController {
 	public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRequestDTO dto) {
 		UserResponseDTO response = userService.register(dto);
 
-		response.addLink(new LinkUtilDTO("self", "/auth/register"));
-		response.addLink(new LinkUtilDTO("login", "/auth/login"));
+		response.addLink(new LinkUtilDTO("self", "/api/auth/register"));
+		response.addLink(new LinkUtilDTO("login", "/api/auth/login"));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
@@ -119,9 +119,9 @@ public class AuthController {
 	public ResponseEntity<TokenResponseDTO> login(@RequestBody @Valid LoginRequestDTO dto) {
 		TokenResponseDTO response = userService.login(dto);
 
-		response.addLink(new LinkUtilDTO("self", "/auth/login"));
-		response.addLink(new LinkUtilDTO("register", "/auth/register"));
-		response.addLink(new LinkUtilDTO("me", "/users/me"));
+		response.addLink(new LinkUtilDTO("self", "/api/auth/login"));
+		response.addLink(new LinkUtilDTO("register", "/api/auth/register"));
+		response.addLink(new LinkUtilDTO("me", "/api/users/me"));
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

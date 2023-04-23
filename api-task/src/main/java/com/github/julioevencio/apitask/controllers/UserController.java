@@ -70,8 +70,8 @@ public class UserController {
 	public ResponseEntity<UserResponseDTO> me() {
 		UserResponseDTO response = userService.me();
 
-		response.addLink(new LinkUtilDTO("self", "/users/me"));
-		response.addLink(new LinkUtilDTO("login", "/auth/login"));
+		response.addLink(new LinkUtilDTO("self", "/api/users/me"));
+		response.addLink(new LinkUtilDTO("login", "/api/auth/login"));
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
