@@ -65,7 +65,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
 	public TokenResponseDTO login(LoginRequestDTO dto) {
 		UserEntity user = userRepository.findByUsername(dto.getUsername()).orElseThrow(() -> new ApiTaskLoginException("Username not found"));
 
@@ -79,7 +78,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
 	public UserResponseDTO me() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 

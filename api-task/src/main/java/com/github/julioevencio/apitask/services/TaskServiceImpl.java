@@ -80,6 +80,7 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	@Transactional
 	public TaskResponseDTO update(UUID id, TaskRequestDTO dto) {
 		TaskEntity task = taskRepository
 				.findByIdAndUser(id, this.getUser())
@@ -93,6 +94,7 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(UUID id) {
 		TaskEntity task = taskRepository
 				.findByIdAndUser(id, this.getUser())
