@@ -18,6 +18,6 @@ spring:
             ddl-auto: none
             dialect: org.hibernate.dialect.PostgreSQLDialect
 spring-doc:
-    pathsToMatch: /api/**, /auth/**
+    pathsToMatch: /api/**, /auth/**, /users/**
     swagger-ui:
         use-root-path: true

@@ -88,4 +88,9 @@ public class UserServiceImpl implements UserService {
 		return UserMapperDTO.fromEntity(user);
 	}
 
+	@Override
+	public List<UserResponseDTO> findAll() {
+		return userRepository.findAll().stream().map(UserMapperDTO::fromEntity).toList();
+	}
+
 }

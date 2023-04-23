@@ -1,5 +1,7 @@
 package com.github.julioevencio.apitask.services;
 
+import java.util.List;
+
 import com.github.julioevencio.apitask.dto.security.LoginRequestDTO;
 import com.github.julioevencio.apitask.dto.security.TokenResponseDTO;
 import com.github.julioevencio.apitask.dto.user.UserRequestDTO;
@@ -12,5 +14,7 @@ public interface UserService {
 	TokenResponseDTO login(LoginRequestDTO dto);
 
 	UserResponseDTO me();
+
+	List<UserResponseDTO> findAll();
 
 }
