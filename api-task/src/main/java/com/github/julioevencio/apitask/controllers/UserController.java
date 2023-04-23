@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping(path = "/users")
+@RequestMapping(path = "/api/users")
 @Tag(name = "Users", description = "Endpoints for users")
 public class UserController {
 

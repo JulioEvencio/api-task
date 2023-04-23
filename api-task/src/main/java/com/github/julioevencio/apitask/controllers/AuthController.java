@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(path = "/auth")
+@RequestMapping(path = "/api/auth")
 @Tag(name = "Auth", description = "Endpoints for authentication")
 public class AuthController {
 
