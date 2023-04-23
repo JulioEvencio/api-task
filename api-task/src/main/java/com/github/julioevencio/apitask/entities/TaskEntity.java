@@ -22,7 +22,7 @@ public class TaskEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@Column(nullable = false, unique = true, length = 100)
+	@Column(nullable = false, length = 100)
 	private String title;
 
 	@Column(nullable = false, length = 1000)
