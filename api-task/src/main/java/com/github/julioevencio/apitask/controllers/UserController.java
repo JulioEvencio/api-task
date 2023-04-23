@@ -71,7 +71,7 @@ public class UserController {
 		UserResponseDTO response = userService.me();
 
 		response.addLink(new LinkUtilDTO("self", "/users/me"));
-		response.addLink(new LinkUtilDTO("find all users", "/users"));
+		response.addLink(new LinkUtilDTO("login", "/auth/login"));
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
