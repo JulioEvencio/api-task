@@ -186,6 +186,51 @@ public class TaskController {
 		return ResponseEntity.status(HttpStatus.OK).body(taskService.findByTitle(title));
 	}
 
+	@GetMapping(path = "/completed/{completed}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Operation(
+			security = @SecurityRequirement(name = "bearerAuth"),
+			summary = "Show all task of a user by completed",
+			description = "Show all task of a user by completed",
+			tags = {"Task"},
+			responses = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "Show all task of a user by completed",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									array = @ArraySchema(schema = @Schema(implementation = TaskResponseDTO.class))
+							)
+					),
+					@ApiResponse(
+							responseCode = "400",
+							description = "Bad request",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					),
+					@ApiResponse(
+							responseCode = "401",
+							description = "Unauthorized",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					),
+					@ApiResponse(
+							responseCode = "403",
+							description = "Forbidden",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					)
+			}
+	)
+	public ResponseEntity<List<TaskResponseDTO>> findByCompleted(@RequestParam Boolean completed) {
+		return ResponseEntity.status(HttpStatus.OK).body(taskService.findByCompleted(completed));
+	}
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(
 			security = @SecurityRequirement(name = "bearerAuth"),
