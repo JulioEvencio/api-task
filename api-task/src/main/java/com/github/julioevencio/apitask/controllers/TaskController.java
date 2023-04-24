@@ -141,6 +141,51 @@ public class TaskController {
 		return ResponseEntity.status(HttpStatus.OK).body(taskService.findAll());
 	}
 
+	@GetMapping(path = "/title/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Operation(
+			security = @SecurityRequirement(name = "bearerAuth"),
+			summary = "Show all task of a user by title",
+			description = "Show all task of a user by title",
+			tags = {"Task"},
+			responses = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "Show all task of a user by title",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									array = @ArraySchema(schema = @Schema(implementation = TaskResponseDTO.class))
+							)
+					),
+					@ApiResponse(
+							responseCode = "400",
+							description = "Bad request",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					),
+					@ApiResponse(
+							responseCode = "401",
+							description = "Unauthorized",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					),
+					@ApiResponse(
+							responseCode = "403",
+							description = "Forbidden",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					)
+			}
+	)
+	public ResponseEntity<List<TaskResponseDTO>> findByTitle(@RequestParam String title) {
+		return ResponseEntity.status(HttpStatus.OK).body(taskService.findByTitle(title));
+	}
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(
 			security = @SecurityRequirement(name = "bearerAuth"),
