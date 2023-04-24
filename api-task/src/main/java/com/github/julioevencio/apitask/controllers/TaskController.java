@@ -1,6 +1,7 @@
 package com.github.julioevencio.apitask.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.julioevencio.apitask.dto.task.TaskRequestDTO;
@@ -36,6 +38,62 @@ public class TaskController {
 
 	public TaskController(TaskServiceImpl taskServiceImpl) {
 		this.taskService = taskServiceImpl;
+	}
+	
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Operation(
+			security = @SecurityRequirement(name = "bearerAuth"),
+			summary = "Find a task for id",
+			description = "Find a task for id",
+			tags = {"Task"},
+			responses = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "Find a task for id",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = TaskResponseDTO.class)
+							)
+					),
+					@ApiResponse(
+							responseCode = "400",
+							description = "Bad request",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					),
+					@ApiResponse(
+							responseCode = "401",
+							description = "Unauthorized",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					),
+					@ApiResponse(
+							responseCode = "403",
+							description = "Forbidden",
+							content = @Content(
+									mediaType = MediaType.APPLICATION_JSON_VALUE,
+									schema = @Schema(implementation = ApiTaskMessageError.class)
+							)
+					)
+			}
+	)
+	public ResponseEntity<TaskResponseDTO> findById(@RequestParam UUID id) {
+		TaskResponseDTO response = taskService.findById(id);
+
+		response.addLink(new LinkUtilDTO("self", "/api/tasks/{id}"));
+		response.addLink(new LinkUtilDTO("find all", "/api/tasks"));
+		response.addLink(new LinkUtilDTO("find by title", "/api/tasks/title/{title}"));
+		response.addLink(new LinkUtilDTO("find by completed", "/api/tasks/completed/{completed}"));
+		response.addLink(new LinkUtilDTO("create", "/api/tasks"));
+		response.addLink(new LinkUtilDTO("update", "/api/tasks/{id}"));
+		response.addLink(new LinkUtilDTO("delete", "/api/tasks/{id}"));
+		response.addLink(new LinkUtilDTO("me", "/api/users/me"));
+
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -128,6 +186,12 @@ public class TaskController {
 		TaskResponseDTO response = taskService.create(dto);
 
 		response.addLink(new LinkUtilDTO("self", "/api/tasks"));
+		response.addLink(new LinkUtilDTO("find by id", "/api/tasks/{id}"));
+		response.addLink(new LinkUtilDTO("find all", "/api/tasks"));
+		response.addLink(new LinkUtilDTO("find by title", "/api/tasks/title/{title}"));
+		response.addLink(new LinkUtilDTO("find by completed", "/api/tasks/completed/{completed}"));
+		response.addLink(new LinkUtilDTO("update", "/api/tasks/{id}"));
+		response.addLink(new LinkUtilDTO("delete", "/api/tasks/{id}"));
 		response.addLink(new LinkUtilDTO("me", "/api/users/me"));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
